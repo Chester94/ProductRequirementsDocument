@@ -1,0 +1,68 @@
+\documentclass[12pt,a4paper,landscape]{extbook}
+\usepackage[T2A]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[russian]{babel}
+\usepackage{graphicx}
+\usepackage{amsfonts,amssymb,amscd,amsmath}
+\usepackage[left=1.5cm, right=1.5cm, top=2.7cm, bottom=2cm]{geometry}
+\usepackage{tikz}
+\usetikzlibrary{arrows,positioning}
+
+\begin{document}
+\thispagestyle{empty}
+
+\tikzstyle{block} = [draw, fill=green!20, rectangle, minimum height=2em, minimum width=11em]
+\tikzstyle{sum} = [draw, fill=blue!20, circle]
+\tikzstyle{output} = [coordinate]
+\tikzstyle{pinstyle} = [pin edge={to-,thin,black}]
+
+
+\begin{tikzpicture}[auto, node distance=2cm,>=latex']
+
+	\node [block] (auth) {Страница авторизации};
+
+	\node [block, below of=auth, node distance=3cm] (projects) {Проекты};
+	
+	\node [block, right of=projects, node distance=7cm] (addProject) {Добавление проекта};
+	
+	\node [block, below of=projects, node distance=3cm] (oneProject) {Проект};
+	
+	\node [block, right of=oneProject, node distance=7cm] (controlProject) {Управление проектом};
+	
+	\node [output, below of=oneProject,node distance=2cm] (fakeNode1) {};
+	
+	\node [block, below of=oneProject, node distance=4cm] (viewTask) {Просмтр задачи};
+	
+	\node [block, left of=viewTask, node distance=7cm] (addTask) {Добавление задачи};	
+	
+	\node [block, right of=viewTask, node distance=7cm] (editTask) {Изменение задачи};
+
+
+	\draw [->, line width=2](auth) -- (projects);
+	
+	\draw [->, line width=2](projects) -- (addProject);
+	
+	\draw [->, line width=2](projects) -- (oneProject);
+	
+	\draw [->, line width=2](oneProject) -- (controlProject);
+	
+	\draw [-, line width=2](oneProject) -- (fakeNode1);
+	
+	\draw [->, line width=2](fakeNode1) -- (viewTask);
+	
+	\draw [->, line width=2](fakeNode1) -| (addTask);
+	
+	\draw [->, line width=2](fakeNode1) -| (editTask);
+	
+	
+	\node [output, below of=auth, pin={[pinstyle]right:Успешная авторизация}, node distance=1cm] (discr_1) {};
+	
+	\node [output, right of=projects, pin={[pinstyle]above:Только для администратора}, node distance=3.5cm] (discr_2) {};
+	
+	\node [output, right of=oneProject, pin={[pinstyle]above:Только для главного разработчика}, node distance=3.5cm] (discr_3) {};
+	
+	\node [output, right of=addTask, above of=addTask,, pin={[pinstyle]above:Только для участника проекта}, node distance=2cm] (discr_4) {};
+	
+\end{tikzpicture}
+
+\end{document}
